@@ -1,34 +1,10 @@
 <div class="wrapper">
   <div class="sidebar" data-color="red">
-    <div class="logo">
-      <a href="#" class="simple-text logo-mini">
-        <div class="logo-img">
-          <img src="./assets/img/logo.png" />
-        </div>
-      </a>
-      <a href="#" class="simple-text logo-normal">
-        Elegance Era
-      </a>
-    </div>
-    <div class="sidebar-wrapper">
-      <ul class="nav">
-        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
-          <a [routerLink]="[menuItem.path]">
-            <i class="now-ui-icons {{menuItem.icon}}"></i>
-            <p>{{menuItem.title}}</p>
-          </a>
-        </li>
-      </ul>
-    </div>
+    <app-sidebar></app-sidebar>
   </div>
   <div class="main-panel">
-    <footer class="footer">
-      <div class="container-fluid">
-        <div class="copyright">
-          &copy;
-          {{test | date: 'yyyy'}}, RAKOTOMAVO TOLOTRA TSILAVINA NY ANTEMA | RAVONIRINA FITAHIANA
-        </div>
-      </div>
-    </footer>
+    <app-navbar></app-navbar>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
   </div>
 </div>
