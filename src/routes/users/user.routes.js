@@ -11,5 +11,6 @@ router.post('/login', userControllers.userLogin);
 router.get('/me', checkAuth, userControllers.getMe);
 router.get('/employe', checkAuth, userControllers.getEmpById);
 router.get('/allEmploye', checkAuth, userControllers.getAllEmp);
+router.get('/empRegister', [checkAuth, checkRole([UserRole.ROLE_USER_MANAGER])], userControllers.empRegister);
 
 module.exports = router;
