@@ -229,6 +229,26 @@ const getAllEmp = async (req, res) => {
     });
 };
 
+const updateUsers = async (req, res) => {
+	const user = {};
+	if(req.body.name) user.name = req.body.name;
+	if(req.body.number) user.number = req.body.number;
+	if(req.body.email) user.email = req.body.email;
+	if(req.body.password) user.password = req.body.password;
+    console.log(req.params.servId)
+
+	await User.updateOne({ _id: req.params.userId }, user)
+		.then(async (result) => {
+                res.status(200).json({result});
+		})
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({
+                message: err.toString()
+            });
+        });
+}
+
 module.exports = {
   userLogin,
   userRegister,
@@ -236,4 +256,5 @@ module.exports = {
   empRegister,
   getEmpById,
   getAllEmp,
+  updateUsers,
 };

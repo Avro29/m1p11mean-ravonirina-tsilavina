@@ -138,16 +138,7 @@ const updateService = async (req, res) => {
             //         service: result
             //         });
             // }
-            if (result.modifiedCount == 1) {
-                res.status(200).json({
-                    message: 'Service has been updated',
-                    service: result
-                });
-            } else {
-                res.status(400).json({
-                    message: 'Service not found'
-                });
-            }
+            res.status(200).json({result});
 						  
 		})
         .catch((err) => {

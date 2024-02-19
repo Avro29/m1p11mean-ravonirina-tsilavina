@@ -13,5 +13,6 @@ router.get('/me', checkAuth, userControllers.getMe);
 router.get('/allEmploye', checkAuth, userControllers.getAllEmp);
 
 router.get('/:empId', checkAuth, userControllers.getEmpById);
+router.put('/:userId', checkAuth, userControllers.updateUsers);
 
 module.exports = router;
