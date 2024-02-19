@@ -5,6 +5,8 @@ const mongoo = require("mongoose");
 const Service = require("./service.model");
 const UserRole = require('../../constants/UserRole');
 
+global.XMLHttpRequest = require("xhr2");
+
 
 
 const addService = async (req, res) => {
@@ -88,6 +90,77 @@ const addService = async (req, res) => {
 	
 };
 
+const getAllService = async (req, res) => {
+    await Service.find().exec()
+    .then(async (result) => {
+        res.status(200).json(result);
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({
+            message: error.toString()
+          })
+    });
+};
+
+const getServiceById = async (req, res) => {
+    await Service.findOne({_id : req.params.servId}).exec()
+    .then(async (result) => {
+        res.status(200).json(result);
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({
+            message: error.toString()
+          })
+    });
+};
+
+const updateService = async (req, res) => {
+	const service = {};
+	if(req.body.name) service.name = req.body.name;
+	if(req.body.price) service.price = req.body.price;
+	if(req.body.duration) service.duration = req.body.duration;
+	if(req.body.commission) service.commission = req.body.commission;
+    console.log(req.params.servId)
+
+	await Service.updateOne({ _id: req.params.servId }, service)
+		.then(async (result) => {
+            console.log(`Service has been updated`);
+
+            // if(req.file){
+            //     const servvvv = await Service.findOne({ _id: req.params.servId});
+            //     await serviceService.uploadCarImage(req, res, vaika);
+            // }
+            // else{
+            //     res.status(200).json({
+            //         message: 'Service has been updated',
+            //         service: result
+            //         });
+            // }
+            if (result.modifiedCount == 1) {
+                res.status(200).json({
+                    message: 'Service has been updated',
+                    service: result
+                });
+            } else {
+                res.status(400).json({
+                    message: 'Service not found'
+                });
+            }
+						  
+		})
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({
+                message: err.toString()
+            });
+        });
+}
+
 module.exports = {
   addService,
+  getAllService,
+  getServiceById,
+  updateService,
 };

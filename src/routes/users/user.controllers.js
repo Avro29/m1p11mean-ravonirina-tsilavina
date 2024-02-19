@@ -204,38 +204,29 @@ const empRegister = async (req, res, next) => {
 }
 
 const getEmpById = async (req, res) => {
-	const empId = req.body.empId;
-	const user = await User.findById(empId);
-	if (user) {
-		if (user.role == UserRole.ROLE_USER_EMPLOYE) {
-			res.status(200).json({
-				message: "Found",
-				user,
-			});
-		} else {
-			res.status(400).json({
-				message: "L'id n'est pas celle d'un employé",
-			});
-		}
-	} else {
-		res.status(400).json({
-			message: "Bad request",
-		});
-	}
+	await User.findOne({ _id : req.params.empId }).exec()
+	.then(async (result) => {
+        res.status(200).json(result);
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({
+            message: error.toString()
+          })
+    });
 };
 
 const getAllEmp = async (req, res) => {
-    const users = await User.find({role : UserRole.ROLE_USER_EMPLOYE});
-    if (users) {
-        res.status(200).json({
-            message: "Found",
-            users
-        })
-    } else {
-		res.status(400).json({
-			message: "Bad request",
-		});
-	}
+    await User.find({role : UserRole.ROLE_USER_EMPLOYE}).exec()
+    .then(async (result) => {
+        res.status(200).json(result);
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({
+            message: error.toString()
+          })
+    });
 };
 
 module.exports = {

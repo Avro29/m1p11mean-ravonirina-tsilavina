@@ -7,10 +7,11 @@ const UserRole = require('../../constants/UserRole');
 
 router.post('/signup', userControllers.userRegister);
 router.post('/login', userControllers.userLogin);
+router.post('/empRegister', [checkAuth, checkRole([UserRole.ROLE_USER_MANAGER])], userControllers.empRegister);
 
 router.get('/me', checkAuth, userControllers.getMe);
-router.get('/employe', checkAuth, userControllers.getEmpById);
 router.get('/allEmploye', checkAuth, userControllers.getAllEmp);
-router.get('/empRegister', [checkAuth, checkRole([UserRole.ROLE_USER_MANAGER])], userControllers.empRegister);
+
+router.get('/:empId', checkAuth, userControllers.getEmpById);
 
 module.exports = router;

@@ -5,6 +5,10 @@ const serviceControllers = require('./service.controllers');
 const router = express.Router();
 const UserRole = require('../../constants/UserRole');
 
-router.post('/addService', serviceControllers.addService);
+router.post('/addService', [checkAuth, checkRole([UserRole.ROLE_USER_MANAGER])], serviceControllers.addService);
+router.put('/:servId', [checkAuth, checkRole([UserRole.ROLE_USER_MANAGER])], serviceControllers.updateService);
+
+router.get('/allService', checkAuth, serviceControllers.getAllService);
+router.get('/:servId', checkAuth, serviceControllers.getServiceById);
 
 module.exports = router;
