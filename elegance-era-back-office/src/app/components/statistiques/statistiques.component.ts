@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
@@ -11,13 +10,7 @@ import { ChartTypeRegistry } from 'chart.js';
   selector: 'app-statistiques',
   templateUrl: './statistiques.component.html',
   styleUrls: ['./statistiques.component.css'],
-  imports: [
-    FormsModule,
-    HttpClientModule,
-    NgbModule,
-    CommonModule,
-    NgChartsModule,
-  ],
+  imports: [FormsModule, NgbModule, CommonModule, NgChartsModule],
 })
 export class StatistiquesComponent implements OnInit {
   public lineBigDashboardChartType!: keyof ChartTypeRegistry;
@@ -60,13 +53,9 @@ export class StatistiquesComponent implements OnInit {
   public lineChartGradientsNumbersLabels!: Array<any>;
   public lineChartGradientsNumbersColors!: Array<any>;
   // events
-  public chartClicked(e: any): void {
-    console.log(e);
-  }
+  public chartClicked(e: any): void {}
 
-  public chartHovered(e: any): void {
-    console.log(e);
-  }
+  public chartHovered(e: any): void {}
   public hexToRGB(hex: string, alpha: string | number) {
     var r = parseInt(hex.slice(1, 3), 16),
       g = parseInt(hex.slice(3, 5), 16),
@@ -128,6 +117,21 @@ export class StatistiquesComponent implements OnInit {
       'DEC',
     ];
     this.lineBigDashboardChartOptions = {
+      plugins: {
+        legend: {
+          display: false,
+        },
+        tooltip: {
+          mode: 'nearest',
+          intersect: false,
+          position: 'nearest',
+          padding: 10,
+          caretPadding: 10,
+          backgroundColor: 'rgba(255,255,255,255)',
+          bodyColor: '#000',
+          titleColor: '#000',
+        },
+      },
       layout: {
         padding: {
           left: 20,
@@ -150,19 +154,19 @@ export class StatistiquesComponent implements OnInit {
           },
           grid: {
             drawTicks: true,
-            display: true,
             color: 'rgba(255,255,255,0.1)',
           },
         },
         x: {
           grid: {
-            zeroLineColor: 'transparent',
             display: false,
           },
           ticks: {
             padding: 10,
             color: 'rgba(255,255,255,0.4)',
-            fontStyle: 'bold',
+            font: {
+              weight: 'bold',
+            },
           },
         },
       },
@@ -172,48 +176,42 @@ export class StatistiquesComponent implements OnInit {
 
     this.gradientChartOptionsConfiguration = {
       maintainAspectRatio: false,
-      legend: {
-        display: false,
+      plugins: {
+        legend: {
+          display: false,
+        },
+        tooltip: {
+          bodySpacing: 10,
+          mode: 'nearest',
+          intersect: false,
+          position: 'nearest',
+          padding: 10,
+          caretPadding: 10,
+        },
       },
-      tooltips: {
-        bodySpacing: 4,
-        mode: 'nearest',
-        intersect: 0,
-        position: 'nearest',
-        xPadding: 10,
-        yPadding: 10,
-        caretPadding: 10,
-      },
-      responsive: 1,
+      responsive: true,
       scales: {
-        yAxes: [
-          {
-            display: 0,
-            ticks: {
-              display: false,
-            },
-            gridLines: {
-              zeroLineColor: 'transparent',
-              drawTicks: false,
-              display: false,
-              drawBorder: false,
-            },
+        y: {
+          display: false,
+          ticks: {
+            display: false,
           },
-        ],
-        xAxes: [
-          {
-            display: 0,
-            ticks: {
-              display: false,
-            },
-            gridLines: {
-              zeroLineColor: 'transparent',
-              drawTicks: false,
-              display: false,
-              drawBorder: false,
-            },
+          grid: {
+            drawTicks: false,
+            display: false,
           },
-        ],
+        },
+        x: {
+          display: false,
+          ticks: {
+            display: false,
+          },
+          grid: {
+            drawTicks: false,
+            display: false,
+            drawBorder: false,
+          },
+        },
       },
       layout: {
         padding: {
@@ -227,45 +225,41 @@ export class StatistiquesComponent implements OnInit {
 
     this.gradientChartOptionsConfigurationWithNumbersAndGrid = {
       maintainAspectRatio: false,
-      legend: {
-        display: false,
-      },
-      tooltips: {
-        bodySpacing: 4,
-        mode: 'nearest',
-        intersect: 0,
-        position: 'nearest',
-        xPadding: 10,
-        yPadding: 10,
-        caretPadding: 10,
+      plugins: {
+        legend: {
+          display: false,
+        },
+        tooltip: {
+          bodySpacing: 10,
+          mode: 'nearest',
+          intersect: false,
+          position: 'nearest',
+          padding: 10,
+          caretPadding: 10,
+        },
       },
       responsive: true,
       scales: {
-        yAxes: [
-          {
-            gridLines: {
-              zeroLineColor: 'transparent',
-              drawBorder: false,
-            },
-            ticks: {
-              stepSize: 500,
-            },
+        y: {
+          border: {
+            display: false,
           },
-        ],
-        xAxes: [
-          {
-            display: 0,
-            ticks: {
-              display: false,
-            },
-            gridLines: {
-              zeroLineColor: 'transparent',
-              drawTicks: false,
-              display: false,
-              drawBorder: false,
-            },
+          ticks: {
+            stepSize: 500,
           },
-        ],
+        },
+        x: {
+          border: {
+            display: false,
+          },
+          ticks: {
+            display: false,
+          },
+          grid: {
+            drawTicks: false,
+            display: false,
+          },
+        },
       },
       layout: {
         padding: {
@@ -298,10 +292,7 @@ export class StatistiquesComponent implements OnInit {
         fill: true,
         borderWidth: 2,
         data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 630],
-      },
-    ];
-    this.lineChartColors = [
-      {
+        tension: 0.5,
         borderColor: '#f96332',
         pointBorderColor: '#FFF',
         pointBackgroundColor: '#f96332',
@@ -347,16 +338,14 @@ export class StatistiquesComponent implements OnInit {
         fill: true,
         borderWidth: 2,
         data: [40, 500, 650, 700, 1200, 1250, 1300, 1900],
-      },
-    ];
-    this.lineChartWithNumbersAndGridColors = [
-      {
         borderColor: '#18ce0f',
         pointBorderColor: '#FFF',
         pointBackgroundColor: '#18ce0f',
         backgroundColor: this.gradientFill,
+        tension: 0.5,
       },
     ];
+
     this.lineChartWithNumbersAndGridLabels = [
       '12pm,',
       '3pm',
@@ -389,16 +378,13 @@ export class StatistiquesComponent implements OnInit {
         fill: true,
         borderWidth: 1,
         data: [80, 99, 86, 96, 123, 85, 100, 75, 88, 90, 123, 155],
-      },
-    ];
-    this.lineChartGradientsNumbersColors = [
-      {
         backgroundColor: this.gradientFill,
         borderColor: '#2CA8FF',
         pointBorderColor: '#FFF',
         pointBackgroundColor: '#2CA8FF',
       },
     ];
+
     this.lineChartGradientsNumbersLabels = [
       'January',
       'February',
@@ -413,47 +399,43 @@ export class StatistiquesComponent implements OnInit {
       'November',
       'December',
     ];
+
     this.lineChartGradientsNumbersOptions = {
       maintainAspectRatio: false,
-      legend: {
-        display: false,
+      plugins: {
+        legend: {
+          display: false,
+        },
+        tooltip: {
+          bodySpacing: 4,
+          mode: 'nearest',
+          intersect: false,
+          position: 'nearest',
+          padding: 10,
+          caretPadding: 10,
+        },
       },
-      tooltips: {
-        bodySpacing: 4,
-        mode: 'nearest',
-        intersect: 0,
-        position: 'nearest',
-        xPadding: 10,
-        yPadding: 10,
-        caretPadding: 10,
-      },
-      responsive: 1,
+      responsive: true,
       scales: {
-        yAxes: [
-          {
-            gridLines: {
-              zeroLineColor: 'transparent',
-              drawBorder: false,
-            },
-            ticks: {
-              stepSize: 20,
-            },
+        y: {
+          beginAtZero: false,
+          border: {
+            display: false,
           },
-        ],
-        xAxes: [
-          {
-            display: 0,
-            ticks: {
-              display: false,
-            },
-            gridLines: {
-              zeroLineColor: 'transparent',
-              drawTicks: false,
-              display: false,
-              drawBorder: false,
-            },
+          ticks: {
+            stepSize: 20,
           },
-        ],
+        },
+        x: {
+          display: 0,
+          ticks: {
+            display: false,
+          },
+          grid: {
+            drawTicks: false,
+            display: false,
+          },
+        },
       },
       layout: {
         padding: {
