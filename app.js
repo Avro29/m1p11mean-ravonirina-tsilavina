@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 
 var usersRouter = require('./src/routes/users/user.routes');
 var servicesRouter = require('./src/routes/services/service.routes');
+var appointmentsRouter = require('./src/routes/appointments/appointment.routes');
+var worktimesRouter = require('./src/routes/worktimes/worktime.routes');
 
 var app = express();
 
@@ -18,6 +20,8 @@ app.use(bodyParser.json());
 
 app.use('/users', usersRouter);
 app.use('/services', servicesRouter);
+app.use('/appointments', appointmentsRouter);
+app.use('/worktimes', worktimesRouter);
 
 const port = 3000
 

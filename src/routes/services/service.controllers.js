@@ -5,8 +5,6 @@ const mongoo = require("mongoose");
 const Service = require("./service.model");
 const UserRole = require('../../constants/UserRole');
 
-global.XMLHttpRequest = require("xhr2");
-
 
 
 const addService = async (req, res) => {

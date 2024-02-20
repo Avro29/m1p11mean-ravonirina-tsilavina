@@ -108,8 +108,8 @@ const userLogin = (req, res, next) => {
                             name: user[0].name,
                             email: user[0].email,
                             role: user[0].role,
+							token: token,
                         },
-                        token: token,
                     });
                 }
 				res.status(401).json({
@@ -229,6 +229,19 @@ const getAllEmp = async (req, res) => {
     });
 };
 
+const getAllClient = async (req, res) => {
+    await User.find({role : UserRole.ROLE_USER_CLIENT}).exec()
+    .then(async (result) => {
+        res.status(200).json(result);
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({
+            message: error.toString()
+          })
+    });
+};
+
 const updateUsers = async (req, res) => {
 	const user = {};
 	if(req.body.name) user.name = req.body.name;
@@ -256,5 +269,6 @@ module.exports = {
   empRegister,
   getEmpById,
   getAllEmp,
+  getAllClient,
   updateUsers,
 };
