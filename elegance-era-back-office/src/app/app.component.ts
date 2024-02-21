@@ -7,6 +7,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { StatistiquesComponent } from './components/statistiques/statistiques.component';
 import { PersonnelsComponent } from './components/personnels/personnels.component';
 import { ServicesComponent } from './components/services/services.component';
+import { DepensesComponent } from './components/depenses/depenses.component';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ import { ServicesComponent } from './components/services/services.component';
     StatistiquesComponent,
     PersonnelsComponent,
     ServicesComponent,
+    DepensesComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
