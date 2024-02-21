@@ -26,7 +26,13 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '/services',
     title: 'Gestion des services',
-    icon: 'shopping_bag-16',
+    icon: 'ui-1_settings-gear-63',
+    class: '',
+  },
+  {
+    path: '/depenses',
+    title: 'Gestion des depenses',
+    icon: 'shopping_cart-simple',
     class: '',
   },
 ];
