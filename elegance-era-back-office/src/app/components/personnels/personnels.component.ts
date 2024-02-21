@@ -2,10 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 declare interface personnelInterface {
-  name: String;
-  country: String;
-  city: String;
-  salary: String;
+  nom: String;
+  email: String;
+  numero: String;
   id: String;
   [key: string]: String;
 }
@@ -19,7 +18,7 @@ declare interface personnelInterface {
 })
 export class PersonnelsComponent implements OnInit {
   tableTitle: String = 'Liste du personnel';
-  headTable: string[] = ['Name', 'Country', 'City', 'Salary'];
+  headTable: string[] = ['Nom', 'Email', 'Numero'];
   personnelDatas: personnelInterface[] = [];
 
   constructor() {}
@@ -27,66 +26,57 @@ export class PersonnelsComponent implements OnInit {
   ngOnInit() {
     this.personnelDatas = [
       {
-        name: 'name1',
-        country: 'country1',
-        city: 'city1',
-        salary: '$554',
+        nom: 'nom1',
+        email: 'email1',
+        numero: 'numero1',
         id: '1',
       },
       {
-        name: 'name2',
-        country: 'country2',
-        city: 'city2',
-        salary: '$554',
+        nom: 'nom2',
+        email: 'email2',
+        numero: 'numero2',
         id: '2',
       },
       {
-        name: 'name3',
-        country: 'country3',
-        city: 'city3',
-        salary: '$554',
+        nom: 'nom3',
+        email: 'email3',
+        numero: 'numero3',
         id: '3',
       },
       {
-        name: 'name4',
-        country: 'country4',
-        city: 'city4',
-        salary: '$554',
+        nom: 'nom4',
+        email: 'email4',
+        numero: 'numero4',
         id: '4',
       },
       {
-        name: 'name5',
-        country: 'country5',
-        city: 'city5',
-        salary: '$554',
+        nom: 'nom5',
+        email: 'email5',
+        numero: 'numero5',
         id: '5',
       },
       {
-        name: 'name6',
-        country: 'country6',
-        city: 'city6',
-        salary: '$554',
+        nom: 'nom6',
+        email: 'email6',
+        numero: 'numero6',
         id: '6',
       },
       {
-        name: 'name7',
-        country: 'country7',
-        city: 'city7',
-        salary: '$554',
+        nom: 'nom7',
+        email: 'email7',
+        numero: 'numero7',
         id: '7',
       },
       {
-        name: 'name8',
-        country: 'country8',
-        city: 'city8',
-        salary: '$554',
+        nom: 'nom8',
+        email: 'email8',
+        numero: 'numero8',
         id: '8',
       },
       {
-        name: 'name9',
-        country: 'country9',
-        city: 'city9',
-        salary: '$554',
+        nom: 'nom9',
+        email: 'email9',
+        numero: 'numero9',
         id: '9',
       },
     ];
@@ -98,7 +88,7 @@ export class PersonnelsComponent implements OnInit {
 
   removeItem(personnel: personnelInterface) {
     // const confirmationDialog = this.dialog.open(ConfirmationDialogComponent, {
-    //   data: { message: `Are you sure you want to remove "${service.name}"?` },
+    //   data: { message: `Are you sure you want to remove "${service.nom}"?` },
     // });
 
     // confirmationDialog.afterClosed().subscribe((confirmed) => {
