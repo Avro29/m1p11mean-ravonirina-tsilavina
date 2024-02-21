@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 declare interface serviceInterface {
-  name: String;
-  country: String;
-  city: String;
-  salary: String;
+  nom: String;
+  duree: String;
+  commission: String;
+  prix: String;
   id: String;
   [key: string]: String;
 }
@@ -19,7 +19,7 @@ declare interface serviceInterface {
 })
 export class ServicesComponent implements OnInit {
   tableTitle: String = 'Liste des services';
-  headTable: string[] = ['Name', 'Country', 'City', 'Salary'];
+  headTable: string[] = ['Nom', 'Duree', 'Commission', 'Prix'];
   serviceDatas: serviceInterface[] = [];
 
   constructor() {}
@@ -27,66 +27,66 @@ export class ServicesComponent implements OnInit {
   ngOnInit() {
     this.serviceDatas = [
       {
-        name: 'name1',
-        country: 'country1',
-        city: 'city1',
-        salary: '$554',
+        nom: 'nom1',
+        duree: 'duree1',
+        commission: '1',
+        prix: '$554',
         id: '1',
       },
       {
-        name: 'name2',
-        country: 'country2',
-        city: 'city2',
-        salary: '$554',
+        nom: 'nom2',
+        duree: 'duree2',
+        commission: '2',
+        prix: '$554',
         id: '2',
       },
       {
-        name: 'name3',
-        country: 'country3',
-        city: 'city3',
-        salary: '$554',
+        nom: 'nom3',
+        duree: 'duree3',
+        commission: '3',
+        prix: '$554',
         id: '3',
       },
       {
-        name: 'name4',
-        country: 'country4',
-        city: 'city4',
-        salary: '$554',
+        nom: 'nom4',
+        duree: 'duree4',
+        commission: '4',
+        prix: '$554',
         id: '4',
       },
       {
-        name: 'name5',
-        country: 'country5',
-        city: 'city5',
-        salary: '$554',
+        nom: 'nom5',
+        duree: 'duree5',
+        commission: '5',
+        prix: '$554',
         id: '5',
       },
       {
-        name: 'name6',
-        country: 'country6',
-        city: 'city6',
-        salary: '$554',
+        nom: 'nom6',
+        duree: 'duree6',
+        commission: '6',
+        prix: '$554',
         id: '6',
       },
       {
-        name: 'name7',
-        country: 'country7',
-        city: 'city7',
-        salary: '$554',
+        nom: 'nom7',
+        duree: 'duree7',
+        commission: '7',
+        prix: '$554',
         id: '7',
       },
       {
-        name: 'name8',
-        country: 'country8',
-        city: 'city8',
-        salary: '$554',
+        nom: 'nom8',
+        duree: 'duree8',
+        commission: '8',
+        prix: '$554',
         id: '8',
       },
       {
-        name: 'name9',
-        country: 'country9',
-        city: 'city9',
-        salary: '$554',
+        nom: 'nom9',
+        duree: 'duree9',
+        commission: '9',
+        prix: '$554',
         id: '9',
       },
     ];
@@ -98,7 +98,7 @@ export class ServicesComponent implements OnInit {
 
   removeItem(service: serviceInterface) {
     // const confirmationDialog = this.dialog.open(ConfirmationDialogComponent, {
-    //   data: { message: `Are you sure you want to remove "${service.name}"?` },
+    //   data: { message: `Are you sure you want to remove "${service.nom}"?` },
     // });
 
     // confirmationDialog.afterClosed().subscribe((confirmed) => {
