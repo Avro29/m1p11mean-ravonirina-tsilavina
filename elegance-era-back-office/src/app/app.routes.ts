@@ -3,6 +3,8 @@ import { StatistiquesComponent } from './components/statistiques/statistiques.co
 import { PersonnelsComponent } from './components/personnels/personnels.component';
 import { ServicesComponent } from './components/services/services.component';
 import { DepensesComponent } from './components/depenses/depenses.component';
+import { AddServicesComponent } from './components/add.services/add.services.component';
+import { AddPersonnelsComponent } from './components/add.personnels/add.personnels.component';
 
 export const routes: Routes = [
   {
@@ -25,5 +27,13 @@ export const routes: Routes = [
   {
     path: 'depenses',
     component: DepensesComponent,
+  },
+  {
+    path: 'services/add',
+    component: AddServicesComponent,
+  },
+  {
+    path: 'personnels/add',
+    component: AddPersonnelsComponent,
   },
 ];

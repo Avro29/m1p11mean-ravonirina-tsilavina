@@ -8,6 +8,8 @@ import { StatistiquesComponent } from './components/statistiques/statistiques.co
 import { PersonnelsComponent } from './components/personnels/personnels.component';
 import { ServicesComponent } from './components/services/services.component';
 import { DepensesComponent } from './components/depenses/depenses.component';
+import { AddServicesComponent } from './components/add.services/add.services.component';
+import { AddPersonnelsComponent } from './components/add.personnels/add.personnels.component';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +24,8 @@ import { DepensesComponent } from './components/depenses/depenses.component';
     PersonnelsComponent,
     ServicesComponent,
     DepensesComponent,
+    AddServicesComponent,
+    AddPersonnelsComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
