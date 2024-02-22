@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 declare interface serviceInterface {
   nom: String;
@@ -15,7 +16,7 @@ declare interface serviceInterface {
   selector: 'app-services',
   templateUrl: './services.component.html',
   styleUrls: ['./services.component.css'],
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
 })
 export class ServicesComponent implements OnInit {
   tableTitle: String = 'Liste des services';

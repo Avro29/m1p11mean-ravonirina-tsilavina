@@ -9,8 +9,9 @@
         </div>
         <div class="card-body">
           <div class="d-grid d-md-flex justify-content-md-end mb-3">
-            <button class="btn btn-primary btn-round" type="button"><i class="now-ui-icons ui-1_simple-add"></i> Nouveau
-              service</button>
+            <a [routerLink]="['/services/add']" routerLinkActive="active"><button class="btn btn-primary btn-round"
+                type="button"><i class="now-ui-icons ui-1_simple-add"></i> Nouveau
+                service</button></a>
           </div>
           <!-- <div class="table-full-width table-responsive"> -->
           <table class="table">
