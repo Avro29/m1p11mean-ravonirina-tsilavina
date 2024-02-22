@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 declare interface personnelInterface {
   nom: String;
@@ -14,7 +15,7 @@ declare interface personnelInterface {
   selector: 'app-personnels',
   templateUrl: './personnels.component.html',
   styleUrls: ['./personnels.component.css'],
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
 })
 export class PersonnelsComponent implements OnInit {
   tableTitle: String = 'Liste du personnel';
