@@ -61,7 +61,7 @@ const addAppointment = async (req, res) => {
 };
 
 const findByClient = async (req, res) => {
-    await Appointment.findOne({client : req.params.clientId}).exec()
+    await Appointment.find({client : req.params.clientId}).exec()
     .then(async (result) => {
         res.status(200).json(result);
     })
@@ -74,7 +74,7 @@ const findByClient = async (req, res) => {
 };
 
 const findByEmp = async (req, res) => {
-    await Appointment.findOne({employe : req.params.empId}).exec()
+    await Appointment.find({employe : req.params.empId}).exec()
     .then(async (result) => {
         res.status(200).json(result);
     })

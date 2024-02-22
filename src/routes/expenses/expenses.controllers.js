@@ -2,20 +2,17 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mongoo = require("mongoose");
 
-const Worktime = require("./worktime.model");
+const Expenses = require("./expenses.model");
 const UserRole = require('../../constants/UserRole');
 
-
-
-const addWorktime = async (req, res) => {
-    const worktime = new Worktime({
+const addExpenses = async (req, res) => {
+    const expenses = new Expenses({
         _id: new mongoo.Types.ObjectId(),
-		employe: req.user.userId,
-        dateDu: req.body.dateDu,
-        dateAu: req.body.dateAu,
+		typeExpenses: req.body.typeExpenses,
+        price: req.body.price,
+        date: req.body.date,
 	});
-
-    worktime
+    expenses
     .save()
     .then(async (result) => {
         await result
@@ -25,11 +22,11 @@ const addWorktime = async (req, res) => {
                     .save()
                     .then(async (result1) => {
                         res.status(201).json({
-                            worktimeDetails: {
-                                worktimeId: result._id,
-                                employe: result.employe,
-                                dateDu: result.dateDu,
-                                dateAu : result.dateAu,
+                            expensesDetails: {
+                                expensesId: result._id,
+                                typeExpenses: result.typeExpenses,
+                                price: result.price,
+                                date: result.date,
                             },
                         })
 
@@ -58,21 +55,8 @@ const addWorktime = async (req, res) => {
 	
 };
 
-const findByEmp = async (req, res) => {
-    await Worktime.find({employe : req.params.empId}).exec()
-    .then(async (result) => {
-        res.status(200).json(result);
-    })
-    .catch((error) => {
-        console.log(error);
-        res.status(500).json({
-            message: error.toString()
-          })
-    });
-};
-
 const getAll = async (req, res) => {
-    await Worktime.find().exec()
+    await Expenses.find().exec()
     .then(async (result) => {
         res.status(200).json(result);
     })
@@ -83,27 +67,8 @@ const getAll = async (req, res) => {
           })
     });
 };
-
-const updateWorktime = async (req, res) => {
-	const worktime = {};
-	if(req.body.dateDu) worktime.dateDu = req.body.dateDu;
-	if(req.body.dateAu) worktime.dateAu = req.body.dateAu;
-
-	await Worktime.updateOne({ _id: req.params.worktId }, worktime)
-		.then(async (result) => {
-            res.status(200).json({result});			  
-		})
-        .catch((err) => {
-            console.log(err);
-            res.status(400).json({
-                message: err.toString()
-            });
-        });
-}
 
 module.exports = {
-    addWorktime,
-    findByEmp,
+    addExpenses,
     getAll,
-    updateWorktime,
   };

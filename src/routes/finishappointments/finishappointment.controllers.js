@@ -2,20 +2,16 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mongoo = require("mongoose");
 
-const Worktime = require("./worktime.model");
+const FinishAppointment = require("./finishappointment.model");
 const UserRole = require('../../constants/UserRole');
 
-
-
-const addWorktime = async (req, res) => {
-    const worktime = new Worktime({
+const addFinishAppointment = async (req, res) => {
+    const finishappointment = new FinishAppointment({
         _id: new mongoo.Types.ObjectId(),
-		employe: req.user.userId,
-        dateDu: req.body.dateDu,
-        dateAu: req.body.dateAu,
+		appointmentId: req.body.appointmentId,
 	});
 
-    worktime
+    finishappointment
     .save()
     .then(async (result) => {
         await result
@@ -25,11 +21,9 @@ const addWorktime = async (req, res) => {
                     .save()
                     .then(async (result1) => {
                         res.status(201).json({
-                            worktimeDetails: {
-                                worktimeId: result._id,
-                                employe: result.employe,
-                                dateDu: result.dateDu,
-                                dateAu : result.dateAu,
+                            finishappointmentDetails: {
+                                finishAppointmentId: result._id,
+                                appointmentId: result.appointmentId,
                             },
                         })
 
@@ -58,21 +52,8 @@ const addWorktime = async (req, res) => {
 	
 };
 
-const findByEmp = async (req, res) => {
-    await Worktime.find({employe : req.params.empId}).exec()
-    .then(async (result) => {
-        res.status(200).json(result);
-    })
-    .catch((error) => {
-        console.log(error);
-        res.status(500).json({
-            message: error.toString()
-          })
-    });
-};
-
 const getAll = async (req, res) => {
-    await Worktime.find().exec()
+    await FinishAppointment.find().exec()
     .then(async (result) => {
         res.status(200).json(result);
     })
@@ -84,26 +65,21 @@ const getAll = async (req, res) => {
     });
 };
 
-const updateWorktime = async (req, res) => {
-	const worktime = {};
-	if(req.body.dateDu) worktime.dateDu = req.body.dateDu;
-	if(req.body.dateAu) worktime.dateAu = req.body.dateAu;
-
-	await Worktime.updateOne({ _id: req.params.worktId }, worktime)
-		.then(async (result) => {
-            res.status(200).json({result});			  
-		})
-        .catch((err) => {
-            console.log(err);
-            res.status(400).json({
-                message: err.toString()
-            });
-        });
-}
+const getByAppointment = async (req, res) => {
+    await FinishAppointment.find({appointmentId : req.params.appointmentId}).exec()
+    .then(async (result) => {
+        res.status(200).json(result);
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({
+            message: error.toString()
+          })
+    });
+};
 
 module.exports = {
-    addWorktime,
-    findByEmp,
+    addFinishAppointment,
     getAll,
-    updateWorktime,
+    getByAppointment,
   };
