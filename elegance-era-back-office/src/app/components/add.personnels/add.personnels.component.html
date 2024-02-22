@@ -1,0 +1,82 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="title">Nouvel employe</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="personnelForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Nom</label>
+              <input type="text" class="form-control" id="nom" formControlName="nom" placeholder="Nom de l'employe">
+              <div *ngIf="personnelForm.controls['nom'].invalid">
+                <div *ngIf="personnelForm.controls['nom'].errors?.['required']">
+                  <div class="text-danger mx-2">Le nom est requis.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Numero</label>
+              <input type="text" class="form-control" id="numero" formControlName="numero"
+                placeholder="Numero de l'employe">
+              <div *ngIf="personnelForm.controls['numero'].invalid">
+                <div *ngIf="personnelForm.controls['numero'].errors?.['required']">
+                  <div class="text-danger mx-2">Le numero est requis.</div>
+                </div>
+                <div *ngIf="personnelForm.controls['numero'].errors?.['pattern']">
+                  <div class="text-danger mx-2">Le numero doit etre un nombre.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" class="form-control" id="email" formControlName="email"
+                placeholder="Email de l'employe">
+              <div *ngIf="personnelForm.controls['email'].invalid">
+                <div *ngIf="personnelForm.controls['email'].errors?.['required']">
+                  <div class="text-danger mx-2">L'email est obligatoire.</div>
+                </div>
+                <div *ngIf="personnelForm.controls['email'].errors?.['email']">
+                  <div class="text-danger mx-2">Le champ doit etre un email.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Mot de passe (8 caracteres minimum)</label>
+              <input type="text" class="form-control" id="password" formControlName="password"
+                placeholder="Mot de passe de l'employe" minlength="8" required>
+              <div *ngIf="personnelForm.controls['password'].invalid">
+                <div *ngIf="personnelForm.get('password')?.errors?.['required']">
+                  <div class="text-danger mx-2">Le mot de passe est obligatoire.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <button class="btn btn-primary btn-round" type="submit">
+                Enregistrer</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
