@@ -12,11 +12,13 @@ const appointmentSchema = new mongoose.Schema({
   },
   service: {
     type : mongoose.Schema.Types.ObjectId,
-    ref: 'Service'
+    ref: 'Service',
+    default: null
   },
   offer: {
     type : mongoose.Schema.Types.ObjectId,
-    ref: 'Offer'
+    ref: 'Offer',
+    default: null
   },
   dateAppointment : Date
 });

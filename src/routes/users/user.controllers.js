@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const mongoo = require("mongoose");
 
 const User = require("./user.model");
+const Service = require("../services/service.model");
+const Offer = require("../offers/offer.model");
 const UserRole = require('../../constants/UserRole');
 const empService = require("../../services/employe-service");
 
@@ -266,6 +268,8 @@ const updateUsers = async (req, res) => {
 
 const getEmployeDispo = async (req, res) => {
 	emp = []
+	const service = await Service.findOne({ _id : req.params.servoffId});
+	const offer = await Offer.findOne({ _id : req.params.servoffId});
 	dateAppointment = new Date(req.params.dateAppointment);
 	const employe = await User.find({ role : UserRole.ROLE_USER_EMPLOYE});
 	if(employe.length == 0){
@@ -279,7 +283,16 @@ const getEmployeDispo = async (req, res) => {
 			if (empWork) {
 				const empInService = await empService.checkIfEmpInService(employe[i] , dateAppointment);
 				if (empInService == false) {
-					emp.push(employe[i])
+					let empHaveNextService = false;
+					if (service) {
+						empHaveNextService = await empService.checkIfNoNextService(employe[i] , dateAppointment, service);
+					}
+					else if (offer) {
+						empHaveNextService = await empService.checkIfNoNextService(employe[i] , dateAppointment, offer);
+					}
+					if (empHaveNextService == false) {
+						emp.push(employe[i])
+					}
 				}
 			}
 		}

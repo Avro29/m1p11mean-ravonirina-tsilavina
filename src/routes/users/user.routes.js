@@ -13,7 +13,7 @@ router.get('/me', checkAuth, userControllers.getMe);
 router.get('/allEmploye', checkAuth, userControllers.getAllEmp);
 router.get('/allClient', checkAuth, userControllers.getAllClient);
 
-router.get('/:dateAppointment', checkAuth, userControllers.getEmployeDispo);
+router.get('/:dateAppointment/:servoffId', checkAuth, userControllers.getEmployeDispo);
 router.get('/:empId', checkAuth, userControllers.getEmpById);
 router.put('/:userId', checkAuth, userControllers.updateUsers);
 
