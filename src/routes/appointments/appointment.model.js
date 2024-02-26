@@ -14,6 +14,10 @@ const appointmentSchema = new mongoose.Schema({
     type : mongoose.Schema.Types.ObjectId,
     ref: 'Service'
   },
+  offer: {
+    type : mongoose.Schema.Types.ObjectId,
+    ref: 'Offer'
+  },
   dateAppointment : Date
 });
 

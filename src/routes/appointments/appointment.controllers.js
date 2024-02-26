@@ -11,8 +11,9 @@ const addAppointment = async (req, res) => {
     const appointment = new Appointment({
         _id: new mongoo.Types.ObjectId(),
 		client: req.user.userId,
-		employe: req.body.empId,
-        service: req.body.servId,
+		employe: req.body.employe,
+        service: req.body.service,
+        offer: req.body.offer,
         dateAppointment: req.body.dateAppointment,
 	});
 
@@ -31,6 +32,7 @@ const addAppointment = async (req, res) => {
                                 client: result.client,
                                 employe: result.employe,
                                 service: result.service,
+                                offer: result.offer,
                                 dateAppointment : result.dateAppointment,
                             },
                         })

@@ -9,11 +9,12 @@ const Mail = require('../../services/mail');
 const addOffer = async (req, res) => {
     const offer = new Offer({
         _id: new mongoo.Types.ObjectId(),
-		serviceId: req.body.serviceId,
-        percentageReduction: req.body.percentageReduction,
+		description: req.body.description,
+		duration: req.body.duration,
+        price: req.body.price,
 	});
 
-    const off = await Offer.find({ serviceId : req.body.serviceId, active: 1});
+    const off = await Offer.find({ description : req.body.description, active: 1});
 	if(off.length > 0){
 		res.status(409).json({
 			message:"One offre already active"
@@ -32,8 +33,9 @@ const addOffer = async (req, res) => {
                             res.status(201).json({
                                 offerDetails: {
                                     offerId: result._id,
-                                    serviceId: result.serviceId,
-                                    percentageReduction: result.percentageReduction,
+                                    description: result.description,
+                                    duration: result.duration,
+                                    price: result.price,
                                 },
                             })
 
@@ -78,8 +80,8 @@ const getAll = async (req, res) => {
     });
 };
 
-const getByService = async (req, res) => {
-    await Offer.find({serviceId : req.params.serviceId}).exec()
+const getById = async (req, res) => {
+    await Offer.findOne({_id : req.params.id}).exec()
     .then(async (result) => {
         res.status(200).json(result);
     })
@@ -94,5 +96,5 @@ const getByService = async (req, res) => {
 module.exports = {
     addOffer,
     getAll,
-    getByService,
+    getById,
   };

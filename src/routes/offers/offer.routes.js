@@ -8,6 +8,6 @@ const UserRole = require('../../constants/UserRole');
 router.post('/addOffer', checkAuth, offerControllers.addOffer);
 
 router.get('/all', checkAuth, offerControllers.getAll);
-router.get('/offer/:serviceId', checkAuth, offerControllers.getByService);
+router.get('/offer/:id', checkAuth, offerControllers.getById);
 
 module.exports = router;
