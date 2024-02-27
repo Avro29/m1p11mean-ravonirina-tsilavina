@@ -1,0 +1,44 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card text-center">
+        <div class="card-header">
+          <h4 class="card-title"> {{tableTitle}}</h4>
+        </div>
+        <div class="card-body">
+          <div class="d-grid d-md-flex justify-content-md-end mb-3">
+            <a [routerLink]="['/personnels/add']" routerLinkActive="active"><button class="btn btn-primary btn-round"
+                type="button"><i class="now-ui-icons ui-1_simple-add"></i> Nouvel
+                employe</button></a>
+          </div>
+          <!-- <div class="table-full-width table-responsive"> -->
+          <table class="table">
+            <thead class=" text-primary">
+              <th *ngFor="let head of headTable">
+                {{head}}
+              </th>
+              <th>
+                Actions
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let personnel of personnelDatas">
+                <td *ngFor="let header of headTable">{{ personnel[header.toLowerCase()] }}</td>
+                <td class="td-actions text-right">
+                  <button type="button" rel="tooltip" title=""
+                    class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" (click)="removeItem(personnel)"
+                    data-original-title="Remove">
+                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

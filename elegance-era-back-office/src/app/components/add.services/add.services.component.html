@@ -1,0 +1,83 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="title">Nouveau service</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Nom</label>
+              <input type="text" class="form-control" id="nom" formControlName="nom" placeholder="Nom du service">
+              <div *ngIf="serviceForm.controls['nom'].invalid">
+                <div *ngIf="serviceForm.controls['nom'].errors?.['required']">
+                  <div class="text-danger mx-2">Le nom est requis.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Duree</label>
+              <input type="text" class="form-control" id="duree" formControlName="duree" placeholder="Duree du service">
+              <div *ngIf="serviceForm.controls['duree'].invalid">
+                <div *ngIf="serviceForm.controls['duree'].errors?.['required']">
+                  <div class="text-danger mx-2">La duree est requis.</div>
+                </div>
+                <div *ngIf="serviceForm.controls['duree'].errors?.['pattern']">
+                  <div class="text-danger mx-2">La duree doit etre un nombre.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Commission</label>
+              <input type="email" class="form-control" id="commission" formControlName="commission"
+                placeholder="Email de l'employe">
+              <div *ngIf="serviceForm.controls['commission'].invalid">
+                <div *ngIf="serviceForm.controls['commission'].errors?.['required']">
+                  <div class="text-danger mx-2">La commission est obligatoire.</div>
+                </div>
+                <div *ngIf="serviceForm.controls['commission'].errors?.['pattern']">
+                  <div class="text-danger mx-2">La commission doit etre un nombre.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Prix</label>
+              <input type="text" class="form-control" id="prix" formControlName="prix" placeholder="Prix du service">
+              <div *ngIf="serviceForm.controls['prix'].invalid">
+                <div *ngIf="serviceForm.controls['prix'].errors?.['required']">
+                  <div class="text-danger mx-2">Le prix du service est obligatoire.</div>
+                </div>
+                <div *ngIf="serviceForm.controls['prix'].errors?.['pattern']">
+                  <div class="text-danger mx-2">Le prix doit etre un nombre.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <button class="btn btn-primary btn-round" type="submit">
+                Enregistrer</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,452 @@
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from '@angular/common';
+import { NgChartsModule } from 'ng2-charts';
+import { ChartTypeRegistry } from 'chart.js';
+
+@Component({
+  standalone: true,
+  selector: 'app-statistiques',
+  templateUrl: './statistiques.component.html',
+  styleUrls: ['./statistiques.component.css'],
+  imports: [FormsModule, NgbModule, CommonModule, NgChartsModule],
+})
+export class StatistiquesComponent implements OnInit {
+  public lineBigDashboardChartType!: keyof ChartTypeRegistry;
+  public gradientStroke!: {
+    addColorStop: (arg0: number, arg1: string) => void;
+  };
+  public chartColor!: string;
+  public canvas: any;
+  public ctx!: {
+    createLinearGradient: (
+      arg0: number,
+      arg1: number,
+      arg2: number,
+      arg3: number
+    ) => any;
+  };
+  public gradientFill!: { addColorStop: (arg0: number, arg1: string) => void };
+  public lineBigDashboardChartData!: Array<any>;
+  public lineBigDashboardChartOptions: any;
+  public lineBigDashboardChartLabels!: Array<any>;
+
+  public gradientChartOptionsConfiguration: any;
+  public gradientChartOptionsConfigurationWithNumbersAndGrid: any;
+
+  public lineChartType!: keyof ChartTypeRegistry;
+  public lineChartData!: Array<any>;
+  public lineChartOptions: any;
+  public lineChartLabels!: Array<any>;
+  public lineChartColors!: Array<any>;
+
+  public lineChartWithNumbersAndGridType!: keyof ChartTypeRegistry;
+  public lineChartWithNumbersAndGridData!: Array<any>;
+  public lineChartWithNumbersAndGridOptions: any;
+  public lineChartWithNumbersAndGridLabels!: Array<any>;
+  public lineChartWithNumbersAndGridColors!: Array<any>;
+
+  public lineChartGradientsNumbersType!: keyof ChartTypeRegistry;
+  public lineChartGradientsNumbersData!: Array<any>;
+  public lineChartGradientsNumbersOptions: any;
+  public lineChartGradientsNumbersLabels!: Array<any>;
+  public lineChartGradientsNumbersColors!: Array<any>;
+  // events
+  public chartClicked(e: any): void {}
+
+  public chartHovered(e: any): void {}
+  public hexToRGB(hex: string, alpha: string | number) {
+    var r = parseInt(hex.slice(1, 3), 16),
+      g = parseInt(hex.slice(3, 5), 16),
+      b = parseInt(hex.slice(5, 7), 16);
+
+    if (alpha) {
+      return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
+    } else {
+      return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+    }
+  }
+
+  constructor() {}
+
+  ngOnInit() {
+    this.chartColor = '#FFFFFF';
+    this.canvas = document.getElementById('bigDashboardChart');
+    this.ctx = this.canvas.getContext('2d');
+
+    this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
+    this.gradientStroke.addColorStop(0, '#80b6f4');
+    this.gradientStroke.addColorStop(1, this.chartColor);
+
+    this.gradientFill = this.ctx.createLinearGradient(0, 200, 0, 50);
+    this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
+    this.gradientFill.addColorStop(1, 'rgba(255, 255, 255, 0.24)');
+
+    this.lineBigDashboardChartData = [
+      {
+        label: 'Data',
+        data: [50, 150, 100, 190, 130, 90, 150, 160, 120, 140, 190, 95],
+        pointBorderWidth: 1,
+        pointBorderColor: this.chartColor,
+        pointHoverRadius: 7,
+        pointHoverBorderWidth: 2,
+        pointHoverBackgroundColor: '#2c2c2c',
+        pointHoverBorderColor: this.chartColor,
+        pointRadius: 5,
+        pointBackgroundColor: '#2c2c2c',
+        fill: true,
+        borderWidth: 2,
+        tension: 0.3,
+        backgroundColor: this.gradientFill,
+        borderColor: this.chartColor,
+      },
+    ];
+    this.lineBigDashboardChartLabels = [
+      'JAN',
+      'FEB',
+      'MAR',
+      'APR',
+      'MAY',
+      'JUN',
+      'JUL',
+      'AUG',
+      'SEP',
+      'OCT',
+      'NOV',
+      'DEC',
+    ];
+    this.lineBigDashboardChartOptions = {
+      plugins: {
+        legend: {
+          display: false,
+        },
+        tooltip: {
+          mode: 'nearest',
+          intersect: false,
+          position: 'nearest',
+          padding: 10,
+          caretPadding: 10,
+          backgroundColor: 'rgba(255,255,255,255)',
+          bodyColor: '#000',
+          titleColor: '#000',
+        },
+      },
+      layout: {
+        padding: {
+          left: 20,
+          right: 20,
+          top: 0,
+          bottom: 0,
+        },
+      },
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          min: 0,
+          ticks: {
+            color: 'rgba(255,255,255,0.4)',
+            font: {
+              weight: 'bold',
+            },
+            maxTicksLimit: 5,
+            padding: 10,
+          },
+          grid: {
+            drawTicks: true,
+            color: 'rgba(255,255,255,0.1)',
+          },
+        },
+        x: {
+          grid: {
+            display: false,
+          },
+          ticks: {
+            padding: 10,
+            color: 'rgba(255,255,255,0.4)',
+            font: {
+              weight: 'bold',
+            },
+          },
+        },
+      },
+    };
+
+    this.lineBigDashboardChartType = 'line';
+
+    this.gradientChartOptionsConfiguration = {
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false,
+        },
+        tooltip: {
+          bodySpacing: 10,
+          mode: 'nearest',
+          intersect: false,
+          position: 'nearest',
+          padding: 10,
+          caretPadding: 10,
+        },
+      },
+      responsive: true,
+      scales: {
+        y: {
+          display: false,
+          ticks: {
+            display: false,
+          },
+          grid: {
+            drawTicks: false,
+            display: false,
+          },
+        },
+        x: {
+          display: false,
+          ticks: {
+            display: false,
+          },
+          grid: {
+            drawTicks: false,
+            display: false,
+            drawBorder: false,
+          },
+        },
+      },
+      layout: {
+        padding: {
+          left: 0,
+          right: 0,
+          top: 15,
+          bottom: 15,
+        },
+      },
+    };
+
+    this.gradientChartOptionsConfigurationWithNumbersAndGrid = {
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false,
+        },
+        tooltip: {
+          bodySpacing: 10,
+          mode: 'nearest',
+          intersect: false,
+          position: 'nearest',
+          padding: 10,
+          caretPadding: 10,
+        },
+      },
+      responsive: true,
+      scales: {
+        y: {
+          border: {
+            display: false,
+          },
+          ticks: {
+            stepSize: 500,
+          },
+        },
+        x: {
+          border: {
+            display: false,
+          },
+          ticks: {
+            display: false,
+          },
+          grid: {
+            drawTicks: false,
+            display: false,
+          },
+        },
+      },
+      layout: {
+        padding: {
+          left: 0,
+          right: 0,
+          top: 15,
+          bottom: 15,
+        },
+      },
+    };
+
+    this.canvas = document.getElementById('lineChartExample');
+    this.ctx = this.canvas.getContext('2d');
+
+    this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
+    this.gradientStroke.addColorStop(0, '#80b6f4');
+    this.gradientStroke.addColorStop(1, this.chartColor);
+
+    this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
+    this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
+    this.gradientFill.addColorStop(1, 'rgba(249, 99, 59, 0.40)');
+
+    this.lineChartData = [
+      {
+        label: 'Active Users',
+        pointBorderWidth: 2,
+        pointHoverRadius: 4,
+        pointHoverBorderWidth: 1,
+        pointRadius: 4,
+        fill: true,
+        borderWidth: 2,
+        data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 630],
+        tension: 0.5,
+        borderColor: '#f96332',
+        pointBorderColor: '#FFF',
+        pointBackgroundColor: '#f96332',
+        backgroundColor: this.gradientFill,
+      },
+    ];
+    this.lineChartLabels = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    this.lineChartOptions = this.gradientChartOptionsConfiguration;
+
+    this.lineChartType = 'line';
+
+    this.canvas = document.getElementById('lineChartExampleWithNumbersAndGrid');
+    this.ctx = this.canvas.getContext('2d');
+
+    this.gradientStroke = this.ctx.createLinearGradient(500, 0, 100, 0);
+    this.gradientStroke.addColorStop(0, '#18ce0f');
+    this.gradientStroke.addColorStop(1, this.chartColor);
+
+    this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
+    this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
+    this.gradientFill.addColorStop(1, this.hexToRGB('#18ce0f', 0.4));
+
+    this.lineChartWithNumbersAndGridData = [
+      {
+        label: 'Email Stats',
+        pointBorderWidth: 2,
+        pointHoverRadius: 4,
+        pointHoverBorderWidth: 1,
+        pointRadius: 4,
+        fill: true,
+        borderWidth: 2,
+        data: [40, 500, 650, 700, 1200, 1250, 1300, 1900],
+        borderColor: '#18ce0f',
+        pointBorderColor: '#FFF',
+        pointBackgroundColor: '#18ce0f',
+        backgroundColor: this.gradientFill,
+        tension: 0.5,
+      },
+    ];
+
+    this.lineChartWithNumbersAndGridLabels = [
+      '12pm,',
+      '3pm',
+      '6pm',
+      '9pm',
+      '12am',
+      '3am',
+      '6am',
+      '9am',
+    ];
+    this.lineChartWithNumbersAndGridOptions =
+      this.gradientChartOptionsConfigurationWithNumbersAndGrid;
+
+    this.lineChartWithNumbersAndGridType = 'line';
+
+    this.canvas = document.getElementById('barChartSimpleGradientsNumbers');
+    this.ctx = this.canvas.getContext('2d');
+
+    this.gradientFill = this.ctx.createLinearGradient(0, 170, 0, 50);
+    this.gradientFill.addColorStop(0, 'rgba(128, 182, 244, 0)');
+    this.gradientFill.addColorStop(1, this.hexToRGB('#2CA8FF', 0.6));
+
+    this.lineChartGradientsNumbersData = [
+      {
+        label: 'Active Countries',
+        pointBorderWidth: 2,
+        pointHoverRadius: 4,
+        pointHoverBorderWidth: 1,
+        pointRadius: 4,
+        fill: true,
+        borderWidth: 1,
+        data: [80, 99, 86, 96, 123, 85, 100, 75, 88, 90, 123, 155],
+        backgroundColor: this.gradientFill,
+        borderColor: '#2CA8FF',
+        pointBorderColor: '#FFF',
+        pointBackgroundColor: '#2CA8FF',
+      },
+    ];
+
+    this.lineChartGradientsNumbersLabels = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    this.lineChartGradientsNumbersOptions = {
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false,
+        },
+        tooltip: {
+          bodySpacing: 4,
+          mode: 'nearest',
+          intersect: false,
+          position: 'nearest',
+          padding: 10,
+          caretPadding: 10,
+        },
+      },
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: false,
+          border: {
+            display: false,
+          },
+          ticks: {
+            stepSize: 20,
+          },
+        },
+        x: {
+          display: 0,
+          ticks: {
+            display: false,
+          },
+          grid: {
+            drawTicks: false,
+            display: false,
+          },
+        },
+      },
+      layout: {
+        padding: {
+          left: 0,
+          right: 0,
+          top: 15,
+          bottom: 15,
+        },
+      },
+    };
+
+    this.lineChartGradientsNumbersType = 'bar';
+  }
+}

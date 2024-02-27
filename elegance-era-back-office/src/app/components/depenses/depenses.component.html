@@ -1,0 +1,63 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="title">Nouvelle depense</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="depenseForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Type</label>
+              <input type="text" class="form-control" id="type" formControlName="type" placeholder="Type de depense">
+              <div *ngIf="depenseForm.controls['type'].invalid">
+                <div *ngIf="depenseForm.controls['type'].errors?.['required']">
+                  <div class="text-danger mx-2">Le type requis.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Prix</label>
+              <input type="text" class="form-control" id="price" formControlName="price" placeholder="Prix du depense">
+              <div *ngIf="depenseForm.controls['price'].invalid">
+                <div *ngIf="depenseForm.controls['price'].errors?.['required']">
+                  <div class="text-danger mx-2">Le prix est requis.</div>
+                </div>
+                <div *ngIf="depenseForm.controls['price'].errors?.['pattern']">
+                  <div class="text-danger mx-2">Le prix doit etre un nombre.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Date d'achat</label>
+              <input type="date" class="form-control" id="purchaseDate" formControlName="purchaseDate">
+              <div *ngIf="depenseForm.controls['purchaseDate'].invalid">
+                <div *ngIf="depenseForm.controls['purchaseDate'].errors?.['required']">
+                  <div class="text-danger mx-2">Le date d'achat est obligatoire.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <button class="btn btn-primary btn-round" type="submit">
+                Enregistrer</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
