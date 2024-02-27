@@ -9,6 +9,7 @@ router.post('/addService', [checkAuth, checkRole([UserRole.ROLE_USER_MANAGER])],
 router.put('/:servId', [checkAuth, checkRole([UserRole.ROLE_USER_MANAGER])], serviceControllers.updateService);
 
 router.get('/allService', checkAuth, serviceControllers.getAllService);
+router.get('/search', checkAuth, serviceControllers.searchService);
 router.get('/:servId', checkAuth, serviceControllers.getServiceById);
 
 module.exports = router;

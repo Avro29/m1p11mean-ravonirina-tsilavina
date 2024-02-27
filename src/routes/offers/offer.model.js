@@ -8,7 +8,8 @@ const offerSchema = new mongoose.Schema({
   },
   description : String,
   duration: Number,
-  price : Number
+  price : Number,
+  commission : Number
 });
 
 module.exports = mongoose.model("Offer", offerSchema);

@@ -147,9 +147,27 @@ const updateService = async (req, res) => {
         });
 }
 
+const searchService = async (req, res) => {
+    var conditions = {};
+    if(req.query.name){
+        conditions.name = { $regex: '.*' + req.query.name + '.*', $options: 'i' };
+    }
+    await Service.find(conditions).exec()
+    .then(async (result) => {
+        res.status(200).json(result);
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({
+            message: error.toString()
+          })
+    });
+}
+
 module.exports = {
   addService,
   getAllService,
   getServiceById,
   updateService,
+  searchService,
 };

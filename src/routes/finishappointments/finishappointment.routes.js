@@ -5,7 +5,7 @@ const finishappointmentControllers = require('./finishappointment.controllers');
 const router = express.Router();
 const UserRole = require('../../constants/UserRole');
 
-router.post('/addFinishAppointment', [checkAuth, checkRole([UserRole.ROLE_USER_CLIENT])], finishappointmentControllers.addFinishAppointment);
+router.post('/addFinishAppointment', [checkAuth, checkRole([UserRole.ROLE_USER_EMPLOYE])], finishappointmentControllers.addFinishAppointment);
 
 router.get('/all', checkAuth, finishappointmentControllers.getAll);
 router.get('/appointment/:appointmentId', checkAuth, finishappointmentControllers.getAll);

@@ -12,6 +12,7 @@ const addOffer = async (req, res) => {
 		description: req.body.description,
 		duration: req.body.duration,
         price: req.body.price,
+        commission: req.body.commission,
 	});
 
     const off = await Offer.find({ description : req.body.description, active: 1});
@@ -36,6 +37,7 @@ const addOffer = async (req, res) => {
                                     description: result.description,
                                     duration: result.duration,
                                     price: result.price,
+                                    commission: result.commission,
                                 },
                             })
 
@@ -93,8 +95,48 @@ const getById = async (req, res) => {
     });
 };
 
+const updateOffer = async (req, res) => {
+	const offer = {};
+	if(req.body.description) offer.description = req.body.description;
+	if(req.body.price) offer.price = req.body.price;
+	if(req.body.duration) offer.duration = req.body.duration;
+	if(req.body.commission) offer.commission = req.body.commission;
+
+	await Offer.updateOne({ _id: req.params.offerId }, offer)
+		.then(async (result) => {
+            console.log(`Offer has been updated`);
+            res.status(200).json({result});
+						  
+		})
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({
+                message: err.toString()
+            });
+        });
+}
+
+const desactivateOffer = async (req, res) => {
+	const offer = {};
+	offer.active = 0;
+
+	await Offer.updateOne({ _id: req.params.offerId }, offer)
+		.then(async (result) => {
+            console.log(`Offer disable`);
+            res.status(200).json({result});			  
+		})
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({
+                message: err.toString()
+            });
+        });
+}
+
 module.exports = {
     addOffer,
     getAll,
     getById,
+    updateOffer,
+    desactivateOffer,
   };

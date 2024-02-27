@@ -4,6 +4,11 @@ const mongoo = require("mongoose");
 
 const Appointment = require("./appointment.model");
 const UserRole = require('../../constants/UserRole');
+const User = require('../users/user.model');
+const Service = require('../services/service.model');
+const FinishA = require('../finishappointments/finishappointment.model');
+const appointService = require("../../services/appointment-service");
+
 
 
 
@@ -119,10 +124,122 @@ const updateAppointment = async (req, res) => {
         });
 }
 
+const getServicePrefered = async (req, res) => {
+    const cli = await User.findOne({ _id : req.user.userId});
+    await Appointment.aggregate([
+        { $match: { client: cli._id } },
+        { $group: { _id: '$service', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+    ])
+    .exec()
+    .then(async (result) => {
+        console.log(result)
+        await Service.findOne({ _id : result[0]._id}).exec()
+        .then(async (service) => {
+            res.status(200).json(service);			  
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({
+                message: err.toString()
+            });
+        });
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(400).json({
+            message: err.toString()
+        });
+    });
+  
+}
+
+const getEmployePrefered = async (req, res) => {
+    const cli = await User.findOne({ _id : req.user.userId});
+    await Appointment.aggregate([
+        { $match: { client: cli._id } },
+        { $group: { _id: '$employe', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+    ])
+    .exec()
+    .then(async (result) => {
+        console.log(result)
+        await User.findOne({ _id : result[0]._id}).exec()
+        .then(async (employe) => {
+            res.status(200).json(employe);			  
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({
+                message: err.toString()
+            });
+        });
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(400).json({
+            message: err.toString()
+        });
+    });
+  
+}
+
+const getAppointmentFinished = async (req, res) => {
+    const appointmentList = await appointService.getAppointmentFini(req.user.userId);
+    console.log(appointmentList);
+    if (appointmentList.length > 0) {
+        res.status(200).json(appointmentList);
+    }
+    else {
+        res.status(400).json({
+            message: 'No appointment Finished'
+        });
+    }
+  
+}
+
+const getCommissionToday = async (req,res) => {
+    var montant = 0.0;
+    const appointmentFinished = await appointService.getAppointmentFini(req.user.userId);
+    const list = await appointService.getAppointmentFiniByDate(appointmentFinished);
+    if (list.length>0) {
+        for(let i=0;i<list.length;i++) {
+            var service = await Service.findOne({ _id : list[i].service});
+            montant += (service.price * service.commission) / 100;
+        }
+    }
+    if (montant > 0) {
+        res.status(200).json({'commission' : montant});
+    }
+    else {
+        res.status(200).json({
+            message: 'No commission Today'
+        });
+    }
+}
+
+const getTaskToday = async (req,res) => {
+    const appointmentFinished = await appointService.getAppointmentFini(req.user.userId);
+    const list = await appointService.getAppointmentFiniByDate(appointmentFinished);
+    if (list.length>0) {
+        res.status(200).json(list);
+    }
+    else {
+        res.status(200).json({
+            message: 'No Task Today'
+        });
+    }
+}
+
 module.exports = {
     addAppointment,
     findByClient,
     findByEmp,
     getAll,
     updateAppointment,
+    getServicePrefered,
+    getEmployePrefered,
+    getAppointmentFinished,
+    getCommissionToday,
+    getTaskToday,
   };

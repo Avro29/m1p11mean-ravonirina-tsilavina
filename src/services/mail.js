@@ -34,8 +34,8 @@ const Mail_new_offre = async (offre) => {
             <p> Bonjour ! </p>
             </br>
             <p>Nous vous informons pour cet nouvel offre spécial : </p>
-            <p>- Service concerné : ${service.name}</p>
-            <p>- Offre : Réduction de ${offre.percentageReduction}%</p>
+            <p>- ${service.description}</p>
+            <p>- Prix : ${offre.price}%</p>
             </br>
             <p>Cordialement,</p>
             <p>L'équipe</p>
