@@ -10,7 +10,7 @@ router.post('/login', userControllers.userLogin);
 router.post('/empRegister', [checkAuth, checkRole([UserRole.ROLE_USER_MANAGER])], userControllers.empRegister);
 
 router.get('/me', checkAuth, userControllers.getMe);
-router.get('/all', userControllers.getAll);
+router.get('/all', checkAuth, userControllers.getAll);
 router.get('/allEmploye', checkAuth, userControllers.getAllEmp);
 router.get('/allClient', checkAuth, userControllers.getAllClient);
 
