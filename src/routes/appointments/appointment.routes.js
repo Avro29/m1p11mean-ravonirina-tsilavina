@@ -14,6 +14,7 @@ router.get('/employePrefered', [checkAuth, checkRole([UserRole.ROLE_USER_CLIENT]
 router.get('/rendezVousFini', [checkAuth, checkRole([UserRole.ROLE_USER_EMPLOYE])], appointmentControllers.getAppointmentFinished);
 router.get('/commission', [checkAuth, checkRole([UserRole.ROLE_USER_EMPLOYE])], appointmentControllers.getCommissionToday);
 router.get('/task', [checkAuth, checkRole([UserRole.ROLE_USER_EMPLOYE])], appointmentControllers.getTaskToday);
+router.get('/montant/:appointId', checkAuth, appointmentControllers.getMontantToPaid);
 router.get('/client/:clientId', checkAuth, appointmentControllers.findByClient);
 router.get('/employe/:empId', checkAuth, appointmentControllers.findByEmp);
 

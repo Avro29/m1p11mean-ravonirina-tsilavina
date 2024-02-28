@@ -231,6 +231,16 @@ const getTaskToday = async (req,res) => {
     }
 }
 
+const getMontantToPaid = async (req,res) => {
+    const appointment = await Appointment.findOne({_id : req.params.appointId}).populate('service').populate('offer');
+    if (appointment.service) {
+        res.status(200).json({ 'Montant' : appointment.service.price });
+    }
+    if (appointment.offer) {
+        res.status(200).json({ 'Montant' : appointment.offer.price });
+    }
+}
+
 module.exports = {
     addAppointment,
     findByClient,
@@ -242,4 +252,5 @@ module.exports = {
     getAppointmentFinished,
     getCommissionToday,
     getTaskToday,
+    getMontantToPaid,
   };
