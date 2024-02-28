@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-const uri = "mongodb://127.0.0.1/27017/Salon";
+const uri = "mongodb+srv://ravotsila:ravotsilameanp11@gestionsalon.py5b3kr.mongodb.net/?retryWrites=true&w=majority&appName=GestionSalon";
 const dbURI = process.env.DB_URI;
-console.log('dbURI:', process.env.DB_URI)
+console.log('dbURI:', uri)
 mongoose.set("strictQuery", false);
 mongoose
-	.connect(dbURI)
+	.connect(uri)
 	.then(() => console.log("Database Connected"))
 	.catch((err) => console.log(err));
 
