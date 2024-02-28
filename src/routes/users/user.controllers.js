@@ -101,7 +101,7 @@ const userLogin = (req, res, next) => {
 							name: user[0].name,
 							role: user[0].role,
 						},
-						process.env.jwtSecret,
+						'secret',
 						{}
                     );
                     console.log(user[0])
