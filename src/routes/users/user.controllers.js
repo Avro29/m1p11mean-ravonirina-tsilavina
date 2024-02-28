@@ -246,6 +246,19 @@ const getAllClient = async (req, res) => {
     });
 };
 
+const getAll = async (req, res) => {
+    await User.find().exec()
+    .then(async (result) => {
+        res.status(200).json(result);
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({
+            message: error.toString()
+          })
+    });
+};
+
 const updateUsers = async (req, res) => {
 	const user = {};
 	if(req.body.name) user.name = req.body.name;
@@ -313,6 +326,7 @@ module.exports = {
   getMe,
   empRegister,
   getEmpById,
+  getAll,
   getAllEmp,
   getAllClient,
   updateUsers,
