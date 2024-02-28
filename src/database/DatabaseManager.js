@@ -5,7 +5,7 @@ const dbURI = process.env.DB_URI;
 console.log('dbURI:', uri)
 mongoose.set("strictQuery", false);
 mongoose
-	.connect(uri)
+	.connect()
 	.then(() => console.log("Database Connected"))
 	.catch((err) => console.log(err));
 

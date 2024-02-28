@@ -31,8 +31,17 @@ app.use('/payments', paymentRouter);
 app.use('/offers', offerRouter);
 app.use('/expenses', expensesRouter);
 
-const port = 3000
+app.use(function(req, res, next) {
+  res.status(404).json({
+    message: "No such route exists"
+  })
+});
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+// error handler
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500).json({
+    message: "Error Message"
+  })
+});
+
+module.exports = app;
