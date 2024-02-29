@@ -1,52 +1,20 @@
-import { AsyncPipe, DecimalPipe } from '@angular/common';
-import { Component, OnInit, PipeTransform } from '@angular/core';
+import { AsyncPipe, CommonModule, DecimalPipe } from '@angular/common';
+import { Component, HostListener, OnInit, PipeTransform } from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, startWith, map } from 'rxjs';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { FooterComponent } from '../footer/footer.component';
+import Rellax from 'rellax';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpService } from '../../services/http.service';
 
-interface Country {
-  name: string;
-  flag: string;
-  area: number;
-  population: number;
-}
-
-const COUNTRIES: Country[] = [
-  {
-    name: 'Russia',
-    flag: 'f/f3/Flag_of_Russia.svg',
-    area: 17075200,
-    population: 146989754,
-  },
-  {
-    name: 'Canada',
-    flag: 'c/cf/Flag_of_Canada.svg',
-    area: 9976140,
-    population: 36624199,
-  },
-  {
-    name: 'United States',
-    flag: 'a/a4/Flag_of_the_United_States.svg',
-    area: 9629091,
-    population: 324459463,
-  },
-  {
-    name: 'China',
-    flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-    area: 9596960,
-    population: 1409517397,
-  },
-];
-
-function search(text: string, pipe: PipeTransform): Country[] {
-  return COUNTRIES.filter((country) => {
-    const term = text.toLowerCase();
-    return (
-      country.name.toLowerCase().includes(term) ||
-      pipe.transform(country.area).includes(term) ||
-      pipe.transform(country.population).includes(term)
-    );
-  });
+interface Rdv {
+  client: { name: string };
+  dateAppointment: Date;
+  employe: { name: string };
+  service: { name: string; price: number };
+  _id: string;
 }
 
 @Component({
@@ -54,18 +22,60 @@ function search(text: string, pipe: PipeTransform): Country[] {
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
   styleUrls: ['./appointments.component.css'],
-  imports: [DecimalPipe, AsyncPipe, ReactiveFormsModule, NgbHighlight],
+  imports: [
+    DecimalPipe,
+    AsyncPipe,
+    ReactiveFormsModule,
+    NgbHighlight,
+    NavbarComponent,
+    FooterComponent,
+    HttpClientModule,
+    CommonModule,
+  ],
   providers: [DecimalPipe],
 })
 export class AppointmentsComponent implements OnInit {
-  countries$: Observable<Country[]>;
+  rdvList!: Rdv[];
+  isLoading: boolean = true;
   filter = new FormControl('', { nonNullable: true });
-  constructor(pipe: DecimalPipe) {
-    this.countries$ = this.filter.valueChanges.pipe(
-      startWith(''),
-      map((text) => search(text, pipe))
-    );
+  constructor(pipe: DecimalPipe, private readonly httpService: HttpService) {
+    this.httpService
+      .getUsersRdv(localStorage.getItem('id') as string)
+      .subscribe({
+        next: (rdv: any) => {
+          this.rdvList = rdv;
+          this.isLoading = false;
+          console.log(this.rdvList);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
-  ngOnInit() {}
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    let element = document.querySelector('.navbar') as HTMLElement;
+    if (window.pageYOffset > 500) {
+      element.classList.remove('navbar-transparent');
+    } else {
+      element.classList.add('navbar-transparent');
+    }
+  }
+
+  // ngOnDestroy(): void {
+  //   var navbar = document.getElementsByTagName('nav')[0];
+  //   navbar.classList.remove('navbar-transparent');
+  //   var body = document.getElementsByTagName('body')[0];
+  //   body.classList.remove('index-page');
+  // }
+
+  ngOnInit(): void {
+    var rellaxHeader = new Rellax('.rellax-header');
+
+    var navbar = document.getElementsByTagName('nav')[0];
+    navbar.classList.add('navbar-transparent');
+    var body = document.getElementsByTagName('body')[0];
+    body.classList.add('index-page');
+  }
 }

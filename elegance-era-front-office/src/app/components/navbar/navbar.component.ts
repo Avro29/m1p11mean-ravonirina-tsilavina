@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpService } from '../../services/http.service';
+import { HttpClientModule } from '@angular/common/http';
 
 declare interface navItem {
   path: string;
@@ -20,11 +22,6 @@ export const ROUTES: navItem[] = [
     title: 'Mes rendez-vous',
     icon: 'ui-1_calendar-60',
   },
-  {
-    path: '/logout',
-    title: 'Se deconnecter',
-    icon: 'sport_user-run',
-  },
 ];
 
 @Component({
@@ -32,14 +29,18 @@ export const ROUTES: navItem[] = [
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
-  imports: [RouterModule, NgbModule, CommonModule],
+  imports: [RouterModule, NgbModule, CommonModule, HttpClientModule],
 })
 export class NavbarComponent implements OnInit {
   private toggleButton: any;
   private sidebarVisible: boolean;
   menuItems!: any[];
 
-  constructor(public location: Location, private element: ElementRef) {
+  constructor(
+    public location: Location,
+    private element: ElementRef,
+    private readonly httpService: HttpService
+  ) {
     this.sidebarVisible = false;
   }
 
@@ -75,12 +76,10 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  isDocumentation() {
-    var titlee = this.location.prepareExternalUrl(this.location.path());
-    if (titlee === '/documentation') {
-      return true;
-    } else {
-      return false;
-    }
+  logout() {
+    this.httpService.logout().subscribe(() => {
+      localStorage.clear();
+      this.httpService.router.navigate(['/signin']);
+    });
   }
 }

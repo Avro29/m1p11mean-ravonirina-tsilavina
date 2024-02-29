@@ -1,0 +1,60 @@
+<div class="page-header" filter-color="orange">
+  <div class="page-header-image"></div>
+  <div class="container">
+    <div class="col-md-4 content-center">
+      <div class="card card-login card-plain">
+        <form class="form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+          <div class="header header-primary text-center">
+            <div class="logo-container">
+              <img src="assets/img/now-logo.png">
+            </div>
+          </div>
+          <div class="content">
+            <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus===true}">
+              <input type="email" class="form-control" placeholder="Email" (focus)="focus=true" (blur)="focus=false"
+                id="email" formControlName="email" value="tsilavinarakotomavo2002@gmail.com">
+            </div>
+            <div *ngIf="userForm.controls['email'].invalid">
+              <div *ngIf="userForm.controls['email'].errors?.['required']">
+                <div class="text-danger my-2">L'email est requis.</div>
+              </div>
+              <div *ngIf="userForm.controls['email'].errors?.['email']">
+                <div class="text-danger my-2">Le champ doit etre un email.</div>
+              </div>
+            </div>
+            <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus1===true}">
+              <input type="password" placeholder="Mot de passe" class="form-control" (focus)="focus1=true"
+                (blur)="focus1=false" id="password" formControlName="password" value="client12345" />
+            </div>
+            <div *ngIf="userForm.controls['password'].invalid">
+              <div *ngIf="userForm.controls['password'].errors?.['required']">
+                <div class="text-danger my-2">Le mot de passe est requis.</div>
+              </div>
+            </div>
+          </div>
+          <div class="footer text-center">
+            <button class="btn btn-primary btn-round btn-lg btn-block">Se connecter</button>
+          </div>
+        </form>
+        <div class="pull-left">
+          <h6>
+            <a [routerLink]="['/signup']" routerLinkActive="router-link-active" class="link">Créer un compte</a>
+          </h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <div class="container">
+      <nav>
+        <ul>
+          <li>ELEGANCE ERA</li>
+        </ul>
+      </nav>
+      <div class="copyright">
+        &copy;
+        {{data | date: 'yyyy'}}, Rakotomavo Tolotra Tsilavina Ny Antema | Ravonirina Fitahiana
+      </div>
+    </div>
+  </footer>
+</div>
