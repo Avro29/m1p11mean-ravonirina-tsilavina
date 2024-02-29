@@ -11,6 +11,7 @@ router.put('/disable/:offerId', checkAuth, offerControllers.desactivateOffer);
 router.put('/update/:offerId', checkAuth, offerControllers.updateOffer);
 
 router.get('/all', checkAuth, offerControllers.getAll);
+router.get('/allActive', checkAuth, offerControllers.getActive);
 router.get('/offer/:id', checkAuth, offerControllers.getById);
 
 module.exports = router;

@@ -82,6 +82,19 @@ const getAll = async (req, res) => {
     });
 };
 
+const getActive = async (req, res) => {
+    await Offer.find({ active : 1}).exec()
+    .then(async (result) => {
+        res.status(200).json(result);
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({
+            message: error.toString()
+          })
+    });
+};
+
 const getById = async (req, res) => {
     await Offer.findOne({_id : req.params.id}).exec()
     .then(async (result) => {
@@ -136,6 +149,7 @@ const desactivateOffer = async (req, res) => {
 module.exports = {
     addOffer,
     getAll,
+    getActive,
     getById,
     updateOffer,
     desactivateOffer,
