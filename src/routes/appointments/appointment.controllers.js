@@ -68,7 +68,7 @@ const addAppointment = async (req, res) => {
 };
 
 const findByClient = async (req, res) => {
-    await Appointment.find({client : req.params.clientId}).exec()
+    await Appointment.find({client : req.params.clientId}).populate('client').populate('employe').populate('service').exec()
     .then(async (result) => {
         res.status(200).json(result);
     })
@@ -81,7 +81,7 @@ const findByClient = async (req, res) => {
 };
 
 const findByEmp = async (req, res) => {
-    await Appointment.find({employe : req.params.empId}).exec()
+    await Appointment.find({employe : req.params.empId}).populate('client').populate('employe').populate('service').exec()
     .then(async (result) => {
         res.status(200).json(result);
     })
@@ -94,7 +94,7 @@ const findByEmp = async (req, res) => {
 };
 
 const getAll = async (req, res) => {
-    await Appointment.find().exec()
+    await Appointment.find().populate('client').populate('employe').populate('service').exec()
     .then(async (result) => {
         res.status(200).json(result);
     })
