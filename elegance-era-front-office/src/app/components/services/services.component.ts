@@ -1,9 +1,21 @@
-import { AsyncPipe, CommonModule, DecimalPipe } from '@angular/common';
-import { Component, HostListener, OnInit, PipeTransform } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
+import {
+  AsyncPipe,
+  CommonModule,
+  DecimalPipe,
+  JsonPipe,
+} from '@angular/common';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  ModalDismissReasons,
+  NgbAlertModule,
+  NgbDateStruct,
+  NgbDatepickerModule,
+  NgbHighlight,
+  NgbModal,
+  NgbTimepickerModule,
+} from '@ng-bootstrap/ng-bootstrap';
 import Rellax from 'rellax';
-import { Observable, map, startWith } from 'rxjs';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -23,7 +35,6 @@ interface Services {
   templateUrl: './services.component.html',
   styleUrls: ['./services.component.css'],
   imports: [
-    DecimalPipe,
     AsyncPipe,
     ReactiveFormsModule,
     NgbHighlight,
@@ -31,19 +42,36 @@ interface Services {
     FooterComponent,
     HttpClientModule,
     CommonModule,
+    ReactiveFormsModule,
+    JsonPipe,
+    NgbDatepickerModule,
+    NgbAlertModule,
+    FormsModule,
+    NgbTimepickerModule,
   ],
   providers: [DecimalPipe],
 })
 export class ServicesComponent implements OnInit {
-  servicesList!: Services[];
+  servicesList: Services[] = [];
   isLoading: boolean = true;
+  dateSelected: boolean = false;
+  dateSet: boolean = false;
+  closeResult!: string;
+  idService!: string;
+  nameService!: string;
+  model!: NgbDateStruct;
+  time = { hour: 0o0, minute: 0o0 };
   filter = new FormControl('', { nonNullable: true });
-  constructor(pipe: DecimalPipe, private readonly httpService: HttpService) {
+  dateAppointment!: Date;
+
+  constructor(
+    private readonly httpService: HttpService,
+    private modalService: NgbModal
+  ) {
     this.httpService.getAllServices().subscribe({
       next: (services: any) => {
         this.servicesList = services;
         this.isLoading = false;
-        console.log(this.servicesList);
       },
       error: (err) => {
         console.log(err);
@@ -51,12 +79,12 @@ export class ServicesComponent implements OnInit {
     });
   }
 
-  add(idService: string) {
+  add() {
     let appointment: Object = {
       employe: '65e0c40f831e19fb6c17ac6c',
-      service: idService,
+      service: this.idService,
       offer: null,
-      dateAppointment: new Date(),
+      dateAppointment: this.dateAppointment,
     };
     this.httpService.addAppointment(appointment).subscribe({
       next: () => {
@@ -102,5 +130,53 @@ export class ServicesComponent implements OnInit {
     navbar.classList.add('navbar-transparent');
     var body = document.getElementsByTagName('body')[0];
     body.classList.add('index-page');
+  }
+
+  open(content: any, idService: string, nameService: string) {
+    this.idService = idService;
+    this.nameService = nameService;
+    this.modalService.open(content).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  selectDate(): void {
+    this.dateSelected = true;
+  }
+
+  searchEmpDispo(): void {
+    this.dateAppointment = new Date(
+      this.model.year,
+      this.model.month,
+      this.model.day,
+      this.time.hour,
+      this.time.minute
+    );
+    this.dateSet = true;
+    this.httpService
+      .getEmpDispo(this.dateAppointment, this.idService)
+      .subscribe({
+        next: (emp) => {
+          console.log(emp);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 }

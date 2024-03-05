@@ -77,9 +77,8 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.httpService.logout().subscribe(() => {
-      localStorage.clear();
-      this.httpService.router.navigate(['/signin']);
-    });
+    localStorage.clear();
+    this.httpService.isLogedIn = false;
+    location.reload();
   }
 }

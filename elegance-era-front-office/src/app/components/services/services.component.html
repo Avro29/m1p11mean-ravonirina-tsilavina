@@ -29,7 +29,7 @@
             </div>
           </form>
 
-          <table class="table table-striped">
+          <table class="table table-striped align-middle">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -47,7 +47,8 @@
                 </td>
                 <td><ngb-highlight [result]="service.duration | number" [term]="filter.value" /></td>
                 <td><ngb-highlight [result]="service.price | number" [term]="filter.value" /></td>
-                <td><button class="btn btn-round" (click)="add(service._id)">Reserver</button></td>
+                <td><button class="btn btn-round" (click)="open(classic, service._id, service.name)">Reserver</button>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -61,3 +62,31 @@
   </div>
   <app-footer></app-footer>
 </div>
+<ng-template #classic let-c="close" let-d="dismiss" style="width: 100em;">
+  <div class="modal-header">
+    <h5 class="modal-title text-center">Prendre un rendez-vous pour le service "{{nameService}}"</h5>
+  </div>
+  <div class="modal-body">
+    <div style="display: flex; flex-direction: column; width: 100%; align-items: center;">
+      <ngb-datepicker
+        style="border: 0 none !important; display: block !important; color: #888888; padding: 8px 6px; position: relative !important; -webkit-box-shadow: none; box-shadow: none;"
+        #dp [(ngModel)]="model" (ngModelChange)="selectDate()" />
+      <ngb-timepicker *ngIf="dateSelected" [(ngModel)]="time" (ngModelChange)="searchEmpDispo()" />
+      <select *ngIf="dateSet" class="form-control" name="" id="">
+        <option value="">Choisir l'employe</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="left-side">
+      <button type="button" class="btn btn-default" (click)="c('Close click')">Never mind</button>
+    </div>
+    <div class="divider"></div>
+    <div class="right-side">
+      <button type="button" class="btn btn-danger" (click)="c('Close click')">Delete</button>
+    </div>
+  </div>
+</ng-template>

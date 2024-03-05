@@ -41,16 +41,17 @@
               </tr>
             </thead>
             <tbody *ngIf="!isLoading">
-              <tr *ngFor="let rdv of rdvList, let i = index">
+              <tr *ngFor="let rdv of showTable, let i = index">
                 <th scope="row">{{ i + 1 }}</th>
                 <td>
-                  <ngb-highlight [result]="rdv.service.name" [term]="filter.value" />
+                  <ngb-highlight [result]="rdv.service" [term]="filter.value" />
                 </td>
-                <td><ngb-highlight [result]="rdv.client.name" [term]="filter.value" /></td>
-                <td><ngb-highlight [result]="rdv.employe.name" [term]="filter.value" /></td>
-                <td><ngb-highlight [result]="rdv.service.price | number" [term]="filter.value" /></td>
-                <td><ngb-highlight [result]="rdv.dateAppointment | date" [term]="filter.value" /></td>
+                <td><ngb-highlight [result]="rdv.client" [term]="filter.value" /></td>
+                <td><ngb-highlight [result]="rdv.employe" [term]="filter.value" /></td>
+                <td><ngb-highlight [result]="rdv.price | number" [term]="filter.value" /></td>
+                <td><ngb-highlight [result]="rdv.dateAppointment" [term]="filter.value" /></td>
               </tr>
+
             </tbody>
           </table>
         </div>

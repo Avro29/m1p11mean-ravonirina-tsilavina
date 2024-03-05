@@ -1,4 +1,9 @@
-import { AsyncPipe, CommonModule, DecimalPipe } from '@angular/common';
+import {
+  AsyncPipe,
+  CommonModule,
+  DatePipe,
+  DecimalPipe,
+} from '@angular/common';
 import { Component, HostListener, OnInit, PipeTransform } from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
@@ -17,13 +22,21 @@ interface Rdv {
   _id: string;
 }
 
+interface ShowTable {
+  client: string;
+  dateAppointment: string;
+  employe: string;
+  service: string;
+  price: number;
+  _id: string;
+}
+
 @Component({
   standalone: true,
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
   styleUrls: ['./appointments.component.css'],
   imports: [
-    DecimalPipe,
     AsyncPipe,
     ReactiveFormsModule,
     NgbHighlight,
@@ -32,20 +45,37 @@ interface Rdv {
     HttpClientModule,
     CommonModule,
   ],
-  providers: [DecimalPipe],
+  providers: [DecimalPipe, DatePipe],
 })
 export class AppointmentsComponent implements OnInit {
   rdvList!: Rdv[];
+  showTable: ShowTable[] = [];
   isLoading: boolean = true;
   filter = new FormControl('', { nonNullable: true });
-  constructor(pipe: DecimalPipe, private readonly httpService: HttpService) {
+  constructor(
+    private datePipe: DatePipe,
+    private readonly httpService: HttpService
+  ) {
     this.httpService
       .getUsersRdv(localStorage.getItem('id') as string)
       .subscribe({
         next: (rdv: any) => {
           this.rdvList = rdv;
+          this.rdvList.forEach((rdv) => {
+            let temp: ShowTable = {
+              _id: rdv._id as string,
+              client: rdv.client.name as string,
+              dateAppointment: this.datePipe.transform(
+                rdv.dateAppointment,
+                'MMM d, y, h:mm:ss a'
+              ) as string,
+              employe: rdv.employe.name as string,
+              service: rdv.service.name as string,
+              price: rdv.service.price,
+            };
+            this.showTable.push(temp);
+          });
           this.isLoading = false;
-          console.log(this.rdvList);
         },
         error: (err) => {
           console.log(err);

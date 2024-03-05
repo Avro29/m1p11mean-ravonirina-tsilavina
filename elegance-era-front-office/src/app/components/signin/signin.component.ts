@@ -41,8 +41,11 @@ export class SigninComponent implements OnInit, OnDestroy {
     private readonly httpService: HttpService
   ) {
     this.userForm = this.fb.group({
-      email: ['', [Validators.email, Validators.required]],
-      password: ['', Validators.required],
+      email: [
+        'tsilavinarakotomavo2002@gmail.com',
+        [Validators.email, Validators.required],
+      ],
+      password: ['client12345', Validators.required],
     });
     this.httpService.checkIsLogedIn().subscribe({
       next: (x: any) => {

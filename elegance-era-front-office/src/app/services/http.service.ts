@@ -19,7 +19,7 @@ export class HttpService {
   urlGetAllUsers: string = '/users/all';
   urlGetAllEmp: string = '/users/allEmploye';
   urlGetAllClient: string = '/users/allClient';
-  urlGetEmpDispo: string = '/users/:dateRendezVous/:idServicenaidOffre';
+  urlGetEmpDispo: string = '/users/';
   urlGetUserById: string = '/users/:id';
 
   //worktime
@@ -115,5 +115,17 @@ export class HttpService {
 
   signup(userData: Object): Observable<any> {
     return this.http.post(this.backendUrl + this.urlSignUp, userData);
+  }
+
+  getEmpDispo(dateRdv: Date, id: string): Observable<any> {
+    return this.http.get(
+      this.backendUrl + this.urlGetEmpDispo + dateRdv + '/' + id,
+      {
+        headers: new HttpHeaders().set(
+          'auth-token',
+          localStorage.getItem('token') as string
+        ),
+      }
+    );
   }
 }
